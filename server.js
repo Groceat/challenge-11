@@ -21,7 +21,8 @@ const writeToFile = (destination, content) =>
     err ? console.error(err) : console.info(`\nData written to ${destination}`)
   );
 
-
+  const readFromFile = util.promisify(fs.readFile);
+  
 const readAndAppend = (content, file) => {
   fs.readFile(file, 'utf8', (err, data) => {
     if (err) {
@@ -46,7 +47,7 @@ app.get('/notes', (req, res) =>
 
 app.get('/api/notes', (req, res) => {
     console.info(`GET /api/notes`);
-    res.status(200).json(notes);
+    readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
   });
 
   // POST request to add a review
