@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const util = require('util');
 const notes = require('./db/db.json');
-
+const { v4: uuidv4 } = require('uuid');
 const PORT = process.env.PORT || 3001;
 
 const app = express();
@@ -64,7 +64,7 @@ app.get('/api/notes', (req, res) => {
       const newNote = {
         title,
         text,
-        id: 1,
+        id: uuidv4(),
       };
       const response = {
         status: 'success',
